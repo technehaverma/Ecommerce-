@@ -1,0 +1,28 @@
+spring:
+   application:
+      name: user-service
+   
+   mongodb:
+      uri: mongodb+srv://technehaverma_db_user:k78McCPBNIFLF2ro@user-data.9nyb9bj.mongodb.net/?appName=user-data
+      database: userdb 
+logging:
+   level:
+      org:
+         mongodb:
+            driver: DEBUG
+#   datasource:
+#      url: jdbc:postgresql://localhost:5432/userdb?options=-c%20timezone=Asia/Kolkata
+#      username: root
+#      password: root
+#      
+#   h2:
+#      console:
+#         enabled: true
+#   datasource:
+#      url: jdbc:h2:mem:test
+#   jpa:       
+#      hibernate :
+#         ddl-auto : create-drop
+#      show-sql : true
+server:
+   port: 8082

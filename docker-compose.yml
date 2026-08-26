@@ -1,0 +1,74 @@
+version: '3.8'
+
+networks:
+  ecomm-network:
+    driver: bridge
+
+services:
+  eureka:
+    build:
+      context: ./eureka
+      builder: paketobuildpacks/builder-jammy-base:latest
+    ports:
+      - "8761:8761"
+    networks:
+      - ecomm-network
+
+  cloudconfig:
+    build:
+      context: ./cloudconfig
+      builder: paketobuildpacks/builder-jammy-base:latest
+    ports:
+      - "8888:8888"
+    networks:
+      - ecomm-network
+    depends_on:
+      - eureka
+
+  gateway:
+    build:
+      context: ./gateway
+      builder: paketobuildpacks/builder-jammy-base:latest
+    ports:
+      - "8080:8080"
+    networks:
+      - ecomm-network
+    depends_on:
+      - eureka
+      - cloudconfig
+
+  product-service:
+    build:
+      context: ./product
+      builder: paketobuildpacks/builder-jammy-base:latest
+    ports:
+      - "8081:8081"
+    networks:
+      - ecomm-network
+    depends_on:
+      - eureka
+      - cloudconfig
+
+  user:
+    build:
+      context: ./user
+      builder: paketobuildpacks/builder-jammy-base:latest
+    ports:
+      - "8082:8082"
+    networks:
+      - ecomm-network
+    depends_on:
+      - eureka
+      - cloudconfig
+
+  order-service:
+    build:
+      context: ./order
+      builder: paketobuildpacks/builder-jammy-base:latest
+    ports:
+      - "8083:8083"
+    networks:
+      - ecomm-network
+    depends_on:
+      - eureka
+      - cloudconfig

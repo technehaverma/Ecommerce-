@@ -1,0 +1,52 @@
+spring:
+   jpa:
+      show-sql: true
+      properties:
+         hibernate:
+            jdbc:
+               time_zone: Asia/Kolkata
+      hibernate:
+         ddl-auto: update
+      database-platform : org.hibernate.dialect.PostgreSQLDialect 
+   datasource:
+      url: jdbc:postgresql://localhost:5432/orderdb?options=-c%20timezone=Asia/Kolkata
+      username: root
+      password: root  
+   rabbitmq:
+      host: localhost 
+      port: 5672
+      username: guest
+      password: guest
+      listener:
+         simple:
+           missing-queues-fatal: false
+           auto-startup: true
+   main:
+      allow-circular-references: true
+   cloud:
+      bus:
+         enabled: true
+management:
+   endpoints:
+      web:
+         exposure: 
+            include: "*"
+   tracing:
+      sampling:
+         probability: 1.0
+logging:
+   file:
+      name: ../logs/${spring.application.name}.log
+   logback:
+      rollingpolicy:
+         max-file-size: 5mb
+         max-history: 7
+eureka:
+   client:
+      register-with-eureka: true
+      fetch-registry: true
+      service-url:
+         defaultZone: http://localhost:8761/eureka/
+server:
+   port: 8081
+

@@ -1,0 +1,2 @@
+rootProject.name = 'Ecommerce Microservice'
+include 'cloudconfig', 'eureka', 'gateway', 'product', 'order', 'user'

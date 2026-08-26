@@ -1,0 +1,23 @@
+spring:
+   application:
+      name: transaction
+management:
+   endpoints:
+      web:
+         exposure: '*'
+   endpoint:
+      health:
+         include: always
+      shutdown:
+         enabled: true
+         
+   info:
+      env:
+         enabled: true
+server:
+   shutdown: graceful
+info:
+   app:
+      name: transaction
+      description: handle all transaction
+      version: 1.0.0

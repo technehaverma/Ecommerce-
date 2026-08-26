@@ -1,0 +1,43 @@
+spring:
+   application:
+      name: user
+   
+   config:
+      import:
+         configserver:http://localhost:8888
+         
+   rabbitmq:
+      host: localhost 
+      port: 5672
+      username: guest
+      password: guest
+   mongodb:
+      uri: mongodb://127.0.0.1:27017/userdb
+logging:
+   level:
+      org:
+         mongodb:
+            driver: DEBUG
+management:
+   endpoints:
+      web:
+         exposure: 
+            include: "*"
+   
+
+#   datasource:
+#      url: jdbc:postgresql://localhost:5432/userdb?options=-c%20timezone=Asia/Kolkata
+#      username: root
+#      password: root
+#      
+#   h2:
+#      console:
+#         enabled: true
+#   datasource:
+#      url: jdbc:h2:mem:test
+#   jpa:       
+#      hibernate :
+#         ddl-auto : create-drop
+#      show-sql : true
+server:
+   port: 8082

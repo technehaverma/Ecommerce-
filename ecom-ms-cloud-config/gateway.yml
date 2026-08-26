@@ -1,0 +1,59 @@
+spring:   
+   rabbitmq:
+      host: localhost 
+      port: 5672
+      username: guest
+      password: guest
+      listener:
+         simple:
+            missing-queues-fatal: false
+            auto-startup: true
+   cloud:
+      bus:
+         enabled: true
+         id: ${spring.application.name}:${random.uuid}
+      gateway:
+         routes:
+            - id: product-service
+              uri: lb://PRODUCT-SERVICE
+              predicates:
+                 - Path=/products/**
+            - id: user
+              uri: lb://USER
+              predicates:
+                 - Path=/user/**
+            - id: order-service
+              uri: lb://ORDER-SERVICE
+              predicates:
+                 - Path=/order/**,/cart/**
+            - id: eureka
+              uri: lb://EUREKA
+              predicates:
+                 - Path=/eureka/main
+              filters:
+                 - SetPath=/
+management:
+   endpoints:
+      web:
+         exposure:
+            include: "*"
+   tracing:
+      sampling:
+         probability: 1.0
+logging:
+
+   level:
+      org.springframework.cloud.gateway: TRACE
+      org.springframework.web.reactive.function.client.ExchangeFunctions: TRACE
+   file:
+      name: ../logs/${spring.application.name}.log
+   logback:
+      rollingpolicy:
+         max-file-size: 5mb
+         max-history: 7
+eureka:
+   client:
+      register-with-eureka: true
+      fetch-registry: true
+      service-url:
+         defaultZone: http://localhost:8761/eureka/

@@ -1,0 +1,62 @@
+spring:
+   application:
+      name: cloudconfig
+   
+   rabbitmq:
+      host: localhost 
+      port: 5672
+      username: guest
+      password: guest
+   cloud:
+      config:
+         enabled: false
+         server:
+            git:
+               uri: https://github.com/technehaverma/ecom-ms-cloud-config
+               username: ${GIT_USER_NAME}
+               password: ${GIT_TOKEN}
+               force-pull: true
+               skip-ssl-validation: true
+               default-label: main
+               clone-on-start: true
+management:
+   endpoints:
+      web:
+         exposure:
+            include: '*'
+logging:
+   file:
+      name: log/${spring.application.name}.log
+   logback:
+      rollingpolicy:
+         max-file-size: 5mb
+         max-history: 7
+   level:
+      org:
+         springframework:
+            cloud:
+               config: DEBUG
+            web: DEBUG
+eureka:
+   client:
+      register-with-eureka: true
+      fetch-registry: true
+      service-url:
+         defaultZone: http://localhost:8761/eureka
+
+      
+#   cloud:
+#      config:   
+#         server:
+#            jdbc:
+#               sql: "SELECT PROP_KEY,PROP_VALUE from configdb.properties where APPLICATION = ? and  PROFILE = ? and LABEL = ?"
+#               default-label: main
+#encrypt:
+#   key: "0E329232EA6D0D73"
+#encrypt:
+#   key-store:
+#      location: config-server.jks
+#      password: mypass
+#      alias: config-server-key
+server:
+   port: 8888

@@ -1,0 +1,46 @@
+spring:
+ application:
+  name: ecomm-application
+
+ datasource:
+  url: jdbc:postgresql://localhost:5432/ecommdb?options=-c%20timezone=Asia/Kolkata
+  username: root
+  password: root
+ jpa:
+  properties:
+   hibernate:
+    jdbc:
+     time_zone: Asia/Kolkata
+  database-platform : org.hibernate.dialect.PostgreSQLDialect 
+  hibernate :
+   ddl-auto : update
+   show-sql : true
+   
+  
+# h2:
+#    console:
+#      enabled: true
+# datasource:
+#    url: jdbc:h2:mem:test
+    
+management:
+ endpoints:
+  web:
+   exposure:
+    include: '*'
+ endpoint:
+  health:
+   show-details: always
+  shutdown:
+   enabled: true
+ info:
+  env:
+   enabled: true
+   
+server:
+ shutdown: graceful
+info:
+ app:
+  name: Ecomm App
+  description: Online Shopping
+  version: 1.0.0
